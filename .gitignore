@@ -42,8 +42,10 @@ pypicloud_env
 _build
 .cache/
 _local.db
-*.ini
 .idea
 .mypy_cache
 .direnv/
 .local
+
+venv
+.venv

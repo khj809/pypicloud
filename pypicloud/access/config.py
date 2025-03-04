@@ -1,5 +1,6 @@
 """ Backend that reads access control rules from config file """
 import logging
+import os
 
 from pyramid.settings import aslist
 
@@ -26,6 +27,11 @@ class ConfigAccessBackend(IJsonAccessBackend):
             if not key.startswith("user."):
                 continue
             users[key[len("user.") :]] = value
+        # FIX: Read users from environment variables (`PPC_USER_<username>`)
+        # https://pypicloud.readthedocs.io/en/latest/topics/access_control.html#user-username
+        for key, value in os.environ.items():
+            if key.startswith("PPC_USER_"):
+                users[key[len("PPC_USER_") :].lower()] = value
         data["users"] = users
 
         data["admins"] = aslist(settings.get("auth.admins", []))
@@ -35,6 +41,11 @@ class ConfigAccessBackend(IJsonAccessBackend):
             if not key.startswith("group."):
                 continue
             groups[key[len("group.") :]] = aslist(value)
+        # FIX: Read groups from environment variables (`PPC_GROUP_<group>`)
+        # https://pypicloud.readthedocs.io/en/latest/topics/access_control.html#group-group
+        for key, value in os.environ.items():
+            if key.startswith("PPC_GROUP_"):
+                groups[key[len("PPC_GROUP_") :].lower()] = aslist(value)
         data["groups"] = groups
 
         packages = {}

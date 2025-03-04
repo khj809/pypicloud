@@ -29,6 +29,7 @@ REQUIREMENTS = [
     "requests",
     "transaction",
     "zope.sqlalchemy",
+    "sqlalchemy<1.3",
 ]
 
 EXTRAS = {

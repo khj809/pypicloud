@@ -5,7 +5,6 @@ EXPOSE 8080
 WORKDIR /app/
 
 # Install packages required
-ENV PYPICLOUD_VERSION 1.3.12
 ENV CARGO_NET_GIT_FETCH_WITH_CLI true
 ADD pyproject.toml setup.py README.rst CHANGES.rst MANIFEST.in requirements_test.txt ./pypicloud/
 ADD pypicloud ./pypicloud/pypicloud

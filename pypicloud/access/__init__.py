@@ -12,6 +12,7 @@ from .base import (
     get_pwd_context,
 )
 from .config import ConfigAccessBackend
+from .dummy import DummyAccessBackend
 from .remote import RemoteAccessBackend
 from .sql import SQLAccessBackend
 
@@ -32,6 +33,8 @@ def includeme(config) -> None:
         dotted_name = "pypicloud.access.ldap_.LDAPAccessBackend"
     elif dotted_name == "aws_secrets_manager":
         dotted_name = AWSSecretsManagerAccessBackend
+    elif dotted_name == "dummy":
+        dotted_name = DummyAccessBackend
     access_backend = resolver.maybe_resolve(dotted_name)
     kwargs = access_backend.configure(settings)
     config.add_request_method(
